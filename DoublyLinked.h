@@ -1,4 +1,8 @@
+#ifndef DOUBLYLINKED_H
+#define DOUBLYLINKED_H
 #include "ListNode.h"
+
+using namespace std;
 
 template<typename T>
 class DoublyLinked{
@@ -10,12 +14,10 @@ public:
   T removeFront();
   T removeAtPos(int pos);
   T peekFront();
-  //int search(T d);
   bool isEmpty();
   int size;
-private:
-  ListNode front;
-  ListNode rear;
+  ListNode<T>* front;
+  ListNode<T>* rear;
 
 };
 
@@ -39,7 +41,7 @@ void DoublyLinked<T>::insertFront(T d){
     front = new ListNode<T>(d);
     rear = front;
   }else{
-    ListNode temp = new ListNode(T d);
+    ListNode<T>* temp = new ListNode<T>(d);
     temp->next = front;
     front->prev = temp;
     front = temp;
@@ -49,7 +51,7 @@ void DoublyLinked<T>::insertFront(T d){
 }
 
 template<typename T>
-void DoublyLinked<T>::insertBack(){
+void DoublyLinked<T>::insertBack(T d){
   if(isEmpty()){
     front = new ListNode<T>(d);
     rear = front;
@@ -64,25 +66,26 @@ template<typename T>
 T DoublyLinked<T>::removeFront(){
   if(!isEmpty()){
     size--;
-    ListNode temp = front;
+    ListNode<T>* temp = front;
     T d = temp->data;
     front = temp->next;
     temp->next = NULL;
     delete temp;
     return d;
+  }else{
+    throw "Empty List Exception";
   }
-  return -1;
 }
 
 template<typename T>
 T DoublyLinked<T>::removeAtPos(int pos){
   if(!isEmpty() && pos < size-1){
     size--;
-    ListNode curr = front;
+    ListNode<T>* curr = front;
     int count = 0;
     while(curr != NULL){
       if(pos==count){
-        ListNode temp = curr;
+        ListNode<T>* temp = curr;
         T d = temp->data;
         temp->prev->next = temp->next;
         temp->next->prev = temp->prev;
@@ -95,19 +98,23 @@ T DoublyLinked<T>::removeAtPos(int pos){
         count++;
       }
     }
+  }else{
+    throw "Empty List Exception";
   }
-  return -1;
 }
 
 template<typename T>
 T DoublyLinked<T>::peekFront(){
   if(!isEmpty()){
-    return front;
+    return front->data;
+  }else{
+    throw "Empty List Exception";
   }
-  return -1;
 }
 
 template<typename T>
 bool DoublyLinked<T>::isEmpty(){
   return (size==0);
 }
+
+#endif

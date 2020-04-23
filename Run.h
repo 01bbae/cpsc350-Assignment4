@@ -1,16 +1,27 @@
-#include "IO.h"
+#ifndef RUN_H
+#define RUN_H
+#include "Student.h"
+#include "LinkedQueue.h"
+
+using namespace std;
 
 class Run{
 public:
   Run();
-  Run(int windows);
+  Run(int window);
   ~Run();
-  runTick(int time);
-  addToQ(int time);
+  void runTick();
+  void addToQ(int timearrived, int timeAtWindow);
+  void getStats();
   int tick;
 private:
-  LinkedQueue* q;
+  LinkedQueue<int>* Q;
   int* windows;
   int* idle;
-  DoublyLinked* wait;
-}
+  LinkedQueue<int>* arrive;
+  DoublyLinked<int>* wait;
+  int windowsize;
+  int waitsize;
+};
+
+#endif

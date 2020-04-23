@@ -1,4 +1,6 @@
-#include <iostream>
+#ifndef LISTNODE_H
+#define LISTNODE_H
+#include <cstddef>
 
 using namespace std;
 
@@ -9,9 +11,9 @@ public:
   ListNode(T d);
   ~ListNode();
   T data;
-  ListNode next;
-  ListNode prev;
-}
+  ListNode* next;
+  ListNode* prev;
+};
 
 template<typename T>
 ListNode<T>::ListNode(){
@@ -31,3 +33,5 @@ template<typename T>
 ListNode<T>::~ListNode(){
   //delete
 }
+
+#endif

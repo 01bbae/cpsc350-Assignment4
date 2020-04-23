@@ -1,4 +1,8 @@
+#ifndef LINKEDQUEUE_H
+#define LINKEDQUEUE_H
 #include "DoublyLinked.h"
+
+using namespace std;
 
 template<typename T>
 class LinkedQueue{
@@ -6,49 +10,60 @@ public:
   LinkedQueue();
   ~LinkedQueue();
   void enQueue(T e);
+  void enQueue(Student* e);
   T deQueue();
   T peek();
   bool isEmpty();
 private:
   int size;
-  DoublyLinked* d;
+  DoublyLinked<T>* d;
 };
 
 template<typename T>
-LinkedQueue::LinkedQueue(){
-  d = new DoublyLinked();
+LinkedQueue<T>::LinkedQueue(){
+  d = new DoublyLinked<T>();
   size=0;
 }
 
 template<typename T>
-LinkedQueue::~LinkedQueue(){
+LinkedQueue<T>::~LinkedQueue(){
   delete d;
 }
 
 template<typename T>
-void LinkedQueue::enQueue(T e){
-  d.insertBack(e);
+void LinkedQueue<T>::enQueue(T e){
+  d->insertBack(e);
   size++;
 }
 
 template<typename T>
-T LinkedQueue::deQueue(){
+void LinkedQueue<T>::enQueue(Student* e){
+  d->insertBack(e);
+  size++;
+}
+
+template<typename T>
+T LinkedQueue<T>::deQueue(){
   if(!isEmpty()){
     size--;
-    return d.removeFront();
+    return d->removeFront();
+  }else{
+    throw "Empty Queue Exception";
   }
-  return -1;
 }
 
 template<typename T>
-T LinkedQueue::deQueue(){
+T LinkedQueue<T>::peek(){
   if(!isEmpty()){
-    return d.peek();
+    return d->peekFront();
+  }else{
+    throw "Empty Queue Exception";
   }
-  return -1;
 }
 
 template<typename T>
-bool LinkedQueue::isEmpty(){
+bool LinkedQueue<T>::isEmpty(){
   return (size==0);
 }
+
+#endif

@@ -21,25 +21,25 @@ IO::IO(string filename){
 
     for(int i=0; i<numStudents; ++i){
       ifs>>timeAtWindow;
-      r.addToQ(timeAtWindow);
+      r->addToQ(0,timeAtWindow);
     }
-    r.runTick();
+    r->runTick();
 
     while(!ifs.eof()){
       ifs >> time;
       ifs >> numStudents;
-      if(Run.tick == time){
+      if(r->tick == time){
         for(int i=0; i<numStudents; ++i){
           ifs>>timeAtWindow;
-          r.addToQ(time, timeAtWindow);
+          r->addToQ(time, timeAtWindow);
         }
       }
-      r.runTick();
+      r->runTick();
     }
 
+    r->getStats();
+    ifs.close();
   }
-
-
 }
 
 IO::~IO(){
